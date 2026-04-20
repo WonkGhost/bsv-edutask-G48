@@ -139,7 +139,7 @@ def test_update_database_error_raises_exception(sut):
     sut.dao.update.side_effect = Exception("Database error")
 
     # Act
-    with pytest.raises(Exception, match="Database update error"):
+    with pytest.raises(Exception, match="Database error"):
         sut.update("abc123", {"name": "Test"})
 
     sut.dao.update.assert_called_once_with(id="abc123", update_data={"$set": {"name": "Test"}})

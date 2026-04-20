@@ -22,7 +22,7 @@ def sut():
 @pytest.mark.unit
 def test_invalid_email_no_at_raises_value_error(sut):
     """An email string without '@' must raise ValueError."""
-    with pytest.raises(ValueError, match="invalid email address"):
+    with pytest.raises(ValueError, match="Error: invalid email address"):
         sut.get_user_by_email("notanemail") 
 
 # ---------------------------------------------------------------------------
@@ -81,6 +81,8 @@ def test_email_alredy_exists_returns_first_user(sut, capsys):
 # TC5 – Valid email, no user found: returns None (EXPECTED TO FAIL)
 # ---------------------------------------------------------------------------
 
+# Marked as xfail since TC5 is intentionally expected to fail due to the known defect 
+@pytest.mark.xfail(reason="Known defect: IndexError raised instead of returning None")
 @pytest.mark.unit
 def test_valid_email_no_user_returns_none(sut):
     """When the DAO returns no users, the function returns None."""

@@ -6,7 +6,7 @@ describe('R8 - Todo item tests', () => {
   let taskId
 
   before(function () {
-    // create a fabricated user from a fixture, code pretty much stolen from login.cy.js
+    // create a fabricated user from a fixture, code sourced from login.cy.js
     cy.fixture('user.json')
       .then((user) => {
         cy.request({
@@ -19,7 +19,7 @@ describe('R8 - Todo item tests', () => {
           name = user.firstName + ' ' + user.lastName
           email = user.email
 
-          // Create the task once via API
+          // Create a task once via the API
           cy.request({
             method: 'POST',
             url: 'http://localhost:5000/tasks/create',
@@ -51,7 +51,7 @@ describe('R8 - Todo item tests', () => {
     cy.get('.popup').should('be.visible')
   })
 
-  //TC1 - Fails due to the fact that the submit button is not disabled when the description input is empty. This is a bug that needs to be fixed.
+  //TC1 - Checks if the add button is disabled when the description input is empty
   it('TC1: Add button is disabled when description is empty', () => {
     cy.get('.inline-form input[type=text]').should('have.value', '')
     cy.get('.inline-form input[type=submit]').should('be.disabled')
@@ -66,8 +66,8 @@ describe('R8 - Todo item tests', () => {
       .should('contain.text', description)
   })
 
-  //TC3 - Toggles the status of a todo item from active to done and checks if the class of the checker element changes from unchecked to checked.
-  it('Changes todo status from active to done', () => {
+  //TC3 - Toggles the status of a todo item from active to done and checks if the class changed.
+  it('TC3: Changes todo status from active to done', () => {
     // Create a new todo item to toggle
     cy.get('.inline-form input[type=text]').type('Toggle test item')
     cy.get('.inline-form input[type=submit]').click()
@@ -85,8 +85,8 @@ describe('R8 - Todo item tests', () => {
       .find('.checker').should('have.class', 'checked')
   })
 
-  //TC4 - Toggles the status of a todo item from done to active and checks if the class of the checker element changes from checked to unchecked.
-  it('Changes todo status from done to active', () => {
+  //TC4 - Toggles the status of a todo item from done to active and checks if the class changed
+  it('TC4: Changes todo status from done to active', () => {
     cy.get('.todo-list .todo-item').last()
       .find('.checker').should('have.class', 'checked')
 
@@ -97,7 +97,7 @@ describe('R8 - Todo item tests', () => {
       .find('.checker').should('have.class', 'unchecked')
   })
 
-  //TC5 
+  //TC5 Deletes a todo item and checks if it is removed from the list.
   it('TC5: Deletes a todo item', () => {
     const description = 'Item to be deleted'
     cy.get('.inline-form input[type=text]').type(description)

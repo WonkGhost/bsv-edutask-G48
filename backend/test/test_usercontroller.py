@@ -78,11 +78,9 @@ def test_email_alredy_exists_returns_first_user(sut, capsys):
     assert result == user1
 
 # ---------------------------------------------------------------------------
-# TC5 – Valid email, no user found: returns None (EXPECTED TO FAIL)
+# TC5 – Valid email, no user found: returns None (Fails due to known defect: IndexError raised instead of returning None)
 # ---------------------------------------------------------------------------
 
-# Marked as xfail since TC5 is intentionally expected to fail due to the known defect 
-@pytest.mark.xfail(reason="Known defect: IndexError raised instead of returning None")
 @pytest.mark.unit
 def test_valid_email_no_user_returns_none(sut):
     """When the DAO returns no users, the function returns None."""
